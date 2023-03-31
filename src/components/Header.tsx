@@ -32,14 +32,20 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="">
-              <a href="/">
+              <Link to="/">
                 <img
                   className="h-10 mt-0"
                   src={airplaneTransparentLogo}
                   alt="Di-Choi"
                 />
-              </a>
+              </Link>
             </div>
+            <Link
+              to="/"
+              className="whitespace-nowrap text-base font-medium text-gray-300"
+            >
+              Di-Choi
+            </Link>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4"></div>
             </div>
@@ -58,7 +64,7 @@ const Header = () => {
 
                 <Link
                   to="/signup"
-                  className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 h-auto border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                  className="ml-8 py-1 text-center whitespace-nowrap inline-flex items-center justify-center px-4 h-auto border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                 >
                   Sign up
                 </Link>

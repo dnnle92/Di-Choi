@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useContext } from "react";
 import PrimaryButton from "../components/Buttons/PrimaryButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,6 +27,8 @@ const SignUp = () => {
     setName(event.target.value);
   };
 
+  const path = useLocation().pathname;
+
   const signup = async (event) => {
     setLoading(true);
     event.preventDefault();
@@ -53,7 +55,7 @@ const SignUp = () => {
             <div>
               <img className="mx-auto w-auto" src={airplaneLogo} alt="logo" />
               <h2 className="mt-1 font-semibold text-3xl text-gray-900 text-center">
-                Sign up
+                {path == "/" ? "Welcome!" : "Sign up"}
               </h2>
             </div>
             <form className="mt-8">

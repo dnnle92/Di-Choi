@@ -1,4 +1,4 @@
-import "./App.css";
+import "./css/App.css";
 import { useState, useEffect } from "react";
 import { supabase } from "./helpers/SupabaseClient";
 import { Session } from "@supabase/gotrue-js/src/lib/types";
@@ -44,7 +44,7 @@ const App = () => {
             {session ? (
               <Route path="/profile" element={<ProfileInfo />} />
             ) : (
-              <Route path="/" element={<Home />} />
+              <Route path="/signin" element={<SignIn />} />
             )}
             <Route path="/verify" element={<Verify />} />
             <Route path="*" element={<NotFound />} />
@@ -52,11 +52,6 @@ const App = () => {
         </AuthProvider>
       </CounterProvider>
       <Footer />
-
-      {/* <Routes>
-        {!session ? <Auth /> : <Account key={session.user.id} session={session} />}
-          <Route path='/signup' element={<SignUp />}/>
-      </Routes> */}
     </div>
   );
 };

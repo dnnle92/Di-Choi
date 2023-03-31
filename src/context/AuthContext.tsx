@@ -28,9 +28,9 @@ const authProvider = ({ children }) => {
         setSession(session!);
       }
     );
-    // return () => {
-    //     authListener.subscription.unsubscribe();
-    // };
+    return () => {
+        authListener.subscription.unsubscribe();
+    };
   }, []);
 
   const signup = async (phoneNumber, name) => {
