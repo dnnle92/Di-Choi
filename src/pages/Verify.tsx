@@ -36,7 +36,7 @@ function Verify(props) {
     if (error == null) {
       setLoading(false);
       sessionStorage.setItem("canVerify", "false");
-      navigate("/profile");
+      navigate("/form1");
     } else {
       setLoading(false);
       setHaveError(true);

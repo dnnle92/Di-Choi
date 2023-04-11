@@ -8,10 +8,10 @@ import PhoneInput from "react-phone-number-input";
 import { CounterContext } from "../context/CounterContext";
 import airplaneLogo from "../assets/airplane.png";
 import { AuthContext } from "../context/AuthContext";
+import emailjs from "@emailjs/browser";
 
 const SignUp = () => {
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>("");
-  const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -20,14 +20,17 @@ const SignUp = () => {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
   const counterContext = useContext(CounterContext);
-  const handlePassword = (event) => {
-    setPassword(event.target.value);
-  };
   const handleName = (event) => {
     setName(event.target.value);
   };
 
   const path = useLocation().pathname;
+
+  const templateParams = {
+    name: name,
+    phoneNumber: phoneNumber,
+    created_dt: new Date().toDateString(),
+  };
 
   const signup = async (event) => {
     setLoading(true);
@@ -39,6 +42,23 @@ const SignUp = () => {
       sessionStorage.setItem("canVerify", "true");
       sessionStorage.setItem("phoneNumber", phoneNumber!);
       counterContext?.initiateCounter(0);
+
+      emailjs
+        .send(
+          "service_4sldoph",
+          "template_wc9w281",
+          templateParams,
+          "WA4tEcd8LuLG2FLvk"
+        )
+        .then(
+          (response) => {
+            console.log("SUCCESS!", response.status, response.text);
+          },
+          (err) => {
+            console.log("FAILED...", err);
+          }
+        );
+
       navigate("/verify");
     } else {
       setHaveError(true);
@@ -88,7 +108,7 @@ const SignUp = () => {
                 ​By creating an account, you agree to receive SMS messages.
               </div>
               <div
-                className="text-center"
+                className="text-center my-3"
                 title={
                   phoneNumber === "" || name === ""
                     ? "Phone number and name are required!"

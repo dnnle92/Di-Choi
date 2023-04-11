@@ -7,8 +7,7 @@ const Footer = () => {
       &nbsp;
       <span className="text-slate-100">
         <FontAwesomeIcon icon={faCopyright} />
-        &nbsp;di-choi.com.
-        Some rights reserved.
+        &nbsp;di-choi.com. Some rights reserved.
       </span>
     </div>
   );

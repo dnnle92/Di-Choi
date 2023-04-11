@@ -28,14 +28,14 @@ export default function ProfileDropdown() {
           <div className="py-1">
             <Menu.Item>
               <Link to="/profile" className="block px-4 py-2 text-sm">
-                Profile info
+                Profile
               </Link>
             </Menu.Item>
-            {/* <Menu.Item>
-              <Link to="/sessions" className="block px-4 py-2 text-sm">
-                Sessions
+            <Menu.Item>
+              <Link to="/form1" className="block px-4 py-2 text-sm">
+                Trip info
               </Link>
-            </Menu.Item> */}
+            </Menu.Item>
             <Menu.Item>
               <button
                 className="text-center block px-4 py-2 text-sm mb-2 text-red-600"

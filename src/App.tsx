@@ -2,7 +2,7 @@ import "./css/App.css";
 import { useState, useEffect } from "react";
 import { supabase } from "./helpers/SupabaseClient";
 import { Session } from "@supabase/gotrue-js/src/lib/types";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import CounterProvider from "./context/CounterContext";
@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import Verify from "./pages/Verify";
 import ProfileInfo from "./pages/Profile";
 import AuthProvider from "./context/AuthContext";
+import CustomerForm1 from "./pages/CustomerForm1";
 
 const App = () => {
   const [session, setSession] = useState<Session>();
@@ -43,6 +44,11 @@ const App = () => {
             <Route path="/signin" element={<SignIn />} />
             {session ? (
               <Route path="/profile" element={<ProfileInfo />} />
+            ) : (
+              <Route path="/signin" element={<SignIn />} />
+            )}
+            {session ? (
+              <Route path="/form1" element={<CustomerForm1 />} />
             ) : (
               <Route path="/signin" element={<SignIn />} />
             )}
