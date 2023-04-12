@@ -5,7 +5,7 @@ import PrimaryButton from "../components/Buttons/PrimaryButton";
 import SecondaryButton from "../components/Buttons/SecondaryButton";
 import { AuthContext } from "../context/AuthContext";
 import { supabase } from "../helpers/SupabaseClient";
-import Datepicker from "react-tailwindcss-datepicker";
+import { toast } from "react-toastify";
 
 const ProfileInfo = (props) => {
   //const [profilePicture, setProfilePicture] = useState(avatar);
@@ -14,32 +14,8 @@ const ProfileInfo = (props) => {
   const [name, setName] = useState("");
   const [profileName, setProfileName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  // const [address, setAddress] = useState("");
-  // const [dob, setDob] = useState("");
-  const [needVisa, setNeedVisa] = useState(false);
-  const [tripValue, setTripValue] = useState({
-    startDate: null,
-    endDate: null,
-  });
-  const [dobValue, setDobValue] = useState({
-    startDate: null,
-    endDate: null,
-  });
 
   const context = useContext(AuthContext);
-
-  const handleTripValueChange = (newValue) => {
-    console.log("newValue:", newValue);
-    setTripValue(newValue);
-  };
-
-  const handleDobValueChange = (newValue) => {
-    console.log("newValue:", newValue);
-    setDobValue(newValue);
-  };
-  const handleNeedVisa = () => {
-    setNeedVisa((needVisa) => !needVisa);
-  };
 
   useEffect(() => {
     const getProfile = async () => {
@@ -58,14 +34,6 @@ const ProfileInfo = (props) => {
         setName(data.full_name);
         setProfileName(data.full_name);
         setPhoneNumber(user.phone);
-        // setAddress(data.address);
-        //setDob(data.date_of_birth);
-
-        // if (data.need_visa == null) {
-        //   setNeedVisa(false);
-        // } else {
-        //   setNeedVisa(data.need_visa);
-        // }
       }
 
       setLoading(false);
@@ -81,17 +49,16 @@ const ProfileInfo = (props) => {
     const { user } = context?.session;
 
     const updates = {
-      // id: user.id,
+      id: user.id,
       full_name: name,
-      // address: address,
-      //date_of_birth: dob,
-      // need_visa: needVisa,
       updated_at: new Date(),
     };
 
     let { error } = await supabase.from("profiles").upsert(updates);
 
-    if (error) {
+    if (error == null) {
+      toast.success("Success!");
+    } else {
       alert(error.message);
     }
     setLoading(false);
@@ -178,41 +145,6 @@ const ProfileInfo = (props) => {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
-            {/* <div className="mt-3">
-              <label className="text-sm font-bold text-slate-700 mb-1">
-                When is your trip?
-              </label>
-              <Datepicker
-                inputClassName="px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 focus:outline-none w-full rounded-md sm:text-sm disabled:shadow-none"
-                // startFrom={today}
-                useRange={false}
-                value={tripValue}
-                onChange={handleTripValueChange}
-              />
-            </div>
-            <div className="mt-3">
-              <label className="text-sm font-bold text-slate-700 mb-1">
-                Date of birth
-              </label>
-              <Datepicker
-                inputClassName="px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 focus:outline-none w-full rounded-md sm:text-sm disabled:shadow-none"
-                useRange={false} 
-                asSingle={true} 
-                value={dobValue}
-                onChange={handleDobValueChange}
-              />
-            </div>
-            <div className="mt-3">
-              <label className="text-sm font-bold text-slate-700 mb-1 flex">
-                <input
-                  type="checkbox"
-                  className="px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 focus:outline-none w-5 h-5 rounded-md sm:text-sm disabled:shadow-none"
-                  checked={needVisa}
-                  onChange={handleNeedVisa}
-                />
-                &nbsp; Do you need a Visa?
-              </label>
-            </div> */}
             <div
               className="text-center"
               title={name === "" ? "name are required!" : ""}

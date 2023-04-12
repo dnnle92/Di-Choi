@@ -1,4 +1,5 @@
 import "./css/App.css";
+import "react-toastify/dist/ReactToastify.css";
 import { useState, useEffect } from "react";
 import { supabase } from "./helpers/SupabaseClient";
 import { Session } from "@supabase/gotrue-js/src/lib/types";
@@ -14,6 +15,7 @@ import Verify from "./pages/Verify";
 import ProfileInfo from "./pages/Profile";
 import AuthProvider from "./context/AuthContext";
 import CustomerForm1 from "./pages/CustomerForm1";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const [session, setSession] = useState<Session>();
@@ -55,6 +57,7 @@ const App = () => {
             <Route path="/verify" element={<Verify />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <ToastContainer theme="colored" />
         </AuthProvider>
       </CounterProvider>
       <Footer />

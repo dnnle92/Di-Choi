@@ -6,10 +6,10 @@ import { supabase } from "../helpers/SupabaseClient";
 import airplaneLogo from "../assets/airplane.png";
 import Datepicker from "react-tailwindcss-datepicker";
 import emailjs from "@emailjs/browser";
+import { toast } from "react-toastify";
 
 const CustomerForm1 = () => {
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [createdAt, setCreatedAt] = useState(null);
@@ -52,7 +52,32 @@ const CustomerForm1 = () => {
       setLoading(false);
     };
 
+    const getCustomer = async() => {
+      setLoading(true);
+      const { user } = context?.session;
+
+      let { data, error } = await supabase
+        .from("customers")
+        .select(`trip_start_date, trip_end_date, need_visa`)
+        .eq("id", user.id)
+        .single();
+
+      if (error) {
+        console.warn(error);
+      } else if (data) {
+        setTripValue({startDate: data.trip_start_date, endDate: data.trip_end_date});
+      if (data.need_visa == null) {
+          setNeedVisa(false);
+        } else {
+          setNeedVisa(data.need_visa);
+        }
+      }
+
+      setLoading(false);
+    };
+
     getUser();
+    getCustomer();
   }, [context?.session]);
 
   const submitCustomer = async (event) => {
@@ -98,9 +123,10 @@ const CustomerForm1 = () => {
             console.log("FAILED...", err);
           }
         );
-      setMessage("Saved!");
+
+      toast.success("Success!");
     } else {
-      setMessage(error.message);
+      alert(error.message);
     }
     setLoading(false);
   };
@@ -194,7 +220,6 @@ const CustomerForm1 = () => {
               />
             </div>
           </form>
-          {message}
         </div>
       </div>
     </div>

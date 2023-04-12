@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6">
       <div className="pt-32 pb-12 md:pt-40 md:pb-0">
-        <div className="text-center pb-12 md:pb-16">
+        <div className="text-center pb-12 md:pb-4">
           <h1
             className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4"
             data-aos="zoom-y-out"
@@ -63,7 +63,7 @@ const Home = () => {
         ) : (
           <section className="bg-gray-100">
           <div className="container mx-auto px-2 pt-4 pb-12 text-gray-800">
-            {/* <CustomerForm1 /> */}
+            <CustomerForm1 />
           </div>
         </section>
         )}
